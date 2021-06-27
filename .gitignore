@@ -1,0 +1,9 @@
+*.pyc
+jq-rally-api/__pycache__
+jq-rally-api/config/local_settings.py
+jq-rally-api/config/settings.py
+JQRally.md
+jq-rally-web/node_modules/
+jq-rally-db/mysql/
+docs/dmp/
+diagram

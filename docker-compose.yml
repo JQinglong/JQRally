@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  db:
+    container_name: jq-rally-db
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: rally_database
+      # MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - ./jq-rally-db/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+  api:
+    container_name: jq-rally-api
+    build: ./jq-rally-api
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./jq-rally-api/:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  # web:
+  #   container_name: jq-rally-web
+  #   build: ./jq-rally-web
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - ./jq-rally-web:/app
+  #     - /app/node_modules
+  #   tty: true
+  #   working_dir: /app
+  #   command: sh -c "cd jq-rally/ && yarn install && yarn dev"
