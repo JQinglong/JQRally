@@ -16,9 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from jqrally_api.urls import router as jqrally_api_router
+from rest_framework_swagger.views import get_swagger_view
+from rest_framework_jwt.views import obtain_jwt_token
+
+schema_view = get_swagger_view(title='API Lists')
 
 urlpatterns = [
     path('', include('jqrally_api.urls')),
     path('admin/', admin.site.urls),
     path('api/', include(jqrally_api_router.urls)),
+    path('swagger/', schema_view),
+    path('api-auth/', obtain_jwt_token),
 ]
