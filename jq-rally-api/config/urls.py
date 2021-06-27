@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from jqrally_api.urls import router as jqrally_api_router
 
 urlpatterns = [
     path('', include('jqrally_api.urls')),
     path('admin/', admin.site.urls),
+    path('api/', include(jqrally_api_router.urls)),
 ]
