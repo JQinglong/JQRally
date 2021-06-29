@@ -1,0 +1,6 @@
+{
+  "extends": "./jq-rally-web/jq-rally/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./jq-rally-web/jq-rally",
+  }
+}

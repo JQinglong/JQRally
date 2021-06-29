@@ -23,12 +23,37 @@
         "./*"
       ]
     },
+    "resolveJsonModule": true,
     "types": [
       "@nuxt/types",
       "@nuxtjs/axios",
-      "@types/node"
+      "@nuxtjs/firebase",
+      "@types/node",
+      "vuetify",
+      "@types/jest",
+      "vue-scrollto"
     ]
   },
+  "files": [
+    "shims-vue.d.ts"
+  ],
+  "include": [
+    "*.ts",
+    "api/**/*.ts",
+    "components/**/*.ts",
+    "components/**/*.vue",
+    "compositions/**/*.ts",
+    "constants/**/*.ts",
+    "layouts/**/*.ts",
+    "layouts/**/*.vue",
+    "store/**/*.ts",
+    "plugins/**/*.ts",
+    "utils/**/*.ts",
+    "types/**/*.ts",
+    "pages/**/*.ts",
+    "pages/**/*.vue",
+    "test/**/*.ts"
+  ],
   "exclude": [
     "node_modules",
     ".nuxt",
