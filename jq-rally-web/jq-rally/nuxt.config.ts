@@ -31,6 +31,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/composition-api',
+    '@/plugins/repository',
+    // '@/plugins/vue-scrollto'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -41,7 +44,8 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/composition-api'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -51,7 +55,9 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:8000/api/',
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

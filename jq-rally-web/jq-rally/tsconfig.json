@@ -27,11 +27,11 @@
     "types": [
       "@nuxt/types",
       "@nuxtjs/axios",
-      "@nuxtjs/firebase",
+      // "@nuxtjs/firebase",
       "@types/node",
       "vuetify",
-      "@types/jest",
-      "vue-scrollto"
+      // "@types/jest",
+      // "vue-scrollto"
     ]
   },
   "files": [

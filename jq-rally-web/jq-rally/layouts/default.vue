@@ -105,7 +105,13 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
           to: '/inspire'
-        }
+        },
+        // 追加
+        {
+          icon: 'mdi-pencil',
+          title: 'Memo',
+          to: '/memo'
+        },
       ],
       miniVariant: false,
       right: true,
