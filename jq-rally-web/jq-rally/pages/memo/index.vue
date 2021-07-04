@@ -1,12 +1,7 @@
 <template>
   <div>
-    <v-card dark>
-      <v-card-title class="pa-2">
-        <h3 class="title grow">メモ</h3>
-      </v-card-title>
-    </v-card>
-    <!-- メモリスト -->
-    <memo-list />
+    <!-- メモ編集 -->
+    <memo-admin />
   </div>
 </template>
 
@@ -14,10 +9,10 @@
 import {
   defineComponent,
 } from '@nuxtjs/composition-api'
-import MemoList from '~/components/memo/MemoList.vue'
+import MemoAdmin from '~/components/memo/MemoAdmin.vue'
 
 export default defineComponent({
-  components: { MemoList },
+  components: { MemoAdmin },
   setup() {
     return {
     }

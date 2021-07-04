@@ -14,7 +14,7 @@ export interface ListRequestType  {
   offset?: number
 }
 
-export interface Memo {
+export interface MemoType {
   id: number
   title: string
   memo: string
