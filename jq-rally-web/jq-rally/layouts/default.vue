@@ -1,19 +1,19 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer
       v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
       app
+      clipped
+      dark
     >
-      <v-list>
+      <v-list dense>
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
           :to="item.to"
           router
           exact
+          dense
         >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -23,101 +23,194 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+      <v-divider></v-divider>
+      <v-list dense>
+        <v-list-item
+          v-for="(item, i) in adminitems"
+          :key="i"
+          :to="item.to"
+          router
+          exact
+          height="32px"
+        >
+          <v-list-item-action  class="my-1">
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </v-navigation-drawer>
+
     <v-app-bar
-      :clipped-left="clipped"
-      fixed
       app
+      clipped-left
+      color="purple darken-2"
+      dense
+      dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn
         icon
-        @click.stop="miniVariant = !miniVariant"
+        :to="'/'"
       >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
+        <v-icon
+          class="mx-4"
+          large
+        >
+          mdi-account-group
+        </v-icon>
       </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title class="mr-12 align-center">
+        <span class="title">サイト名</span>
+      </v-toolbar-title> 
+
       <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
+      <v-row
+        align="center"
+        style="max-width: 650px"
       >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+        <!-- <v-text-field
+          :append-icon-cb="() => {}"
+          placeholder="Search..."
+          single-line
+          append-icon="mdi-magnify"
+          color="white"
+          hide-details
+        /> -->
+        <v-spacer></v-spacer>
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon
+              >mdi-account
+              </v-icon>
+            </v-btn>
+          </template>
+        </v-menu>
+      </v-row>
     </v-app-bar>
+
     <v-main>
-      <v-container>
-        <Nuxt />
+      <v-container fluid>
+        <nuxt />
       </v-container>
     </v-main>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+
     <v-footer
       :absolute="!fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>&copy; {{ new Date().getFullYear() }} JQ</span>
     </v-footer>
   </v-app>
 </template>
 
-<script>
-export default {
-  data () {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        },
-        // 追加
-        {
-          icon: 'mdi-pencil',
-          title: 'Memo',
-          to: '/memo'
-        },
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
-    }
-  }
+<script lang="ts">
+import { defineComponent, ref, onMounted } from '@vue/composition-api'
+// import { provideGlobalState, injectGlobalState } from '@/compositions/states/user'
+// import { auth } from '~/plugins/firebase.config'
+// import { SignOut } from '~/compositions/firebase/auth'
+
+type Item = {
+  icon: string
+  title: string
+  to: string
 }
+
+export default defineComponent({
+  name: 'DefaultLayout',
+
+  setup(props: any, { root }) {
+    const clipped = ref(false)
+    const drawer = ref(false)
+    const fixed = ref(false)
+
+    const items = ref<Item[]>([
+      {
+        icon: 'mdi-home',
+        title: 'ホーム',
+        to: '/'
+      },
+      // {
+      //   icon: 'mdi-apps',
+      //   title: 'memo',
+      //   to: '/memo'
+      // },
+      {
+        icon: 'mdi-forum',
+        title: 'メニュー１',
+        to: '/menu1'
+      },
+      {
+        icon: 'mdi-tooltip-account',
+        title:'メニュー２',
+        to: '/menu2'
+      },
+      {
+        icon: 'mdi-bookmark',
+        title: 'メニュー３',
+        to: '/menu3'
+      },
+    ])
+    const adminitems = ref<Item[]>([
+      {
+        icon: 'mdi-pencil',
+        title: 'Memo',
+        to: '/memo'
+      },
+    ])
+    // provideGlobalState()
+    // const stateGlobal = injectGlobalState()
+
+    // onMounted(() => {
+    //   const publicPath = ["/signin","/signup"]
+    //   if (stateGlobal.user.value.id === '') {
+    //     auth.onAuthStateChanged((user) => {
+
+    //       if (user) {
+    //         stateGlobal.setUserState({
+    //           id: user ? user.uid : '',
+    //           email: user && user.email ? user.email : '',
+    //           name: user && user.displayName ? user.displayName : '',
+    //           thumbnail: user && user.photoURL ? user.photoURL : '',
+    //         })
+    //       } else {
+    //         if (root.$route.path.indexOf('/admin') === 0) {
+    //           root.$router.push('/login')
+    //         }
+    //       }
+    //     })
+    //   }
+    // })
+
+    // const signOut = () => {
+    //   SignOut()
+
+    // }
+
+    return {
+      clipped,
+      drawer,
+      fixed,
+      items,
+      adminitems,
+      // stateGlobal,
+      // signOut,
+    }
+  },
+})
+
 </script>
+
+<style scoped>
+.v-list-item__action {
+    margin-top: 4px; margin-bottom: 8px;
+}
+
+</style>
