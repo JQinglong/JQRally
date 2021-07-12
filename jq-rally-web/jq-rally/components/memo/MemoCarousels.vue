@@ -1,27 +1,28 @@
 <template>
   <div>
-    <v-list three-line dense>
-      <template v-for="(item, index) in memoList">
+    <v-carousel
+      :continuous="false"
+      cycle
+      :show-arrows="false"
+      height="300"
+    >
+      <v-carousel-item
+        v-for="(memo, i) in memoList"
+        :key="i"
+      >
+          <v-card>
+            <v-img
+              src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+              class="white--text align-start"
+              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+              width="600"
+            >
+              <v-card-title v-text="memo.title"></v-card-title>
+            </v-img>
 
-
-        <v-divider
-          :key="index"
-        ></v-divider>
-
-        <v-list-item
-          :key="item.title"
-        >
-          <v-list-item-avatar>
-            <v-img src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title v-html="item.title"></v-list-item-title>
-            <v-list-item-subtitle v-html="item.memo"></v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </template>
-    </v-list>
+          </v-card>
+      </v-carousel-item>
+    </v-carousel>
   </div>
 </template>
 
@@ -37,6 +38,14 @@ export default defineComponent({
       { text: 'メモ', value: 'memo' },
       { text: '', value: 'actions', sortable: false },
     ];
+    const colors= [
+      'green',
+      'secondary',
+      'yellow darken-4',
+      'red lighten-2',
+      'orange darken-1',
+    ];
+
     const state = reactive({
       search: '',
       filter: {},
@@ -52,6 +61,7 @@ export default defineComponent({
 
     return {
       headers,
+      colors,
       ...toRefs(state),
       ...toRefs(memoState),
       fetchState,
