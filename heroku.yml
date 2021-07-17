@@ -1,0 +1,6 @@
+build:
+  docker:
+    web: jq-rally-api/Dockerfile
+run:
+  # web: python3 manage.py runserver 0.0.0.0:$PORT
+  web: gunicorn config.wsgi --bind 0.0.0.0:$PORT
