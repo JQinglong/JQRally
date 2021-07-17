@@ -1,20 +1,20 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import {
-  Memo,
+  MemoType,
   ResponseType,
   ResponseTypes,
   CustomErrors,
 } from '@/types'
 import { LIMIT_LIST_ITEM } from '@/constants'
 
-type Memoid = Memo['id']
+type Memoid = MemoType['id']
 
 export interface MemoListRequest  {
   limit?: number
   offset?: number
 }
 export type CreateMemoRequest = Pick<
-  Memo,
+MemoType,
   'title' | 'memo'
 >
 export type UpdateMemoPayload = Partial<CreateMemoRequest>
@@ -24,13 +24,13 @@ export type UpdateMemoRequest = {
 }
 
 // type MemoResponse = ResponseType<'memoData', Memo>
-type MemoResponse = ResponseType<Memo>
+type MemoResponse = ResponseType<MemoType>
 
 // type MemoListResponse = ResponseTypes<{
 //   memos: Memo[]
 //   memosCount: number
 // }>
-type MemoListResponse = ResponseTypes<Memo[]>
+type MemoListResponse = ResponseTypes<MemoType[]>
 
 export const memoRepository = (axios: NuxtAxiosInstance) => ({
   getMemo(memoid: Memoid): MemoResponse {

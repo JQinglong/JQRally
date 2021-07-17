@@ -1,13 +1,13 @@
 import { reactive, useContext } from '@nuxtjs/composition-api'
 import { MemoListRequest, CreateMemoRequest, UpdateMemoRequest } from "@/api/memoRepository";
-import { Memo } from "@/types";
+import { MemoType } from "@/types";
 // import MemoKey from '~/store/memo-key';
 
 type MemoPayload = Required<CreateMemoRequest>
 type CreateState = MemoPayload
 type State = {
-  memoData: Memo
-  memoList: Memo[]
+  memoData: MemoType
+  memoList: MemoType[]
   memoCount: number
 }
 
@@ -37,7 +37,7 @@ export default function useMemo() {
     memoList: [],
     memoCount: 0,
   })
-  const getMemo = async (memoid: Memo['id']) => {
+  const getMemo = async (memoid: MemoType['id']) => {
     const memoData = await $repository.memo.getMemo(memoid)
     console.log('memoid', memoid)
     console.log('getMemo', memoData)
@@ -76,7 +76,7 @@ export default function useMemo() {
     return false
   }
 
-  const deleteMemo = async (memoid: Memo['id']) => {
+  const deleteMemo = async (memoid: MemoType['id']) => {
     await $repository.memo.deleteMemo(memoid)
     await getMemoList()
   }
