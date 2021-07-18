@@ -6,3 +6,4 @@ jq-rally-web/node_modules/
 jq-rally-db/mysql/
 docs/dmp/
 diagram
+jq-rally-web/jq-rally/.env

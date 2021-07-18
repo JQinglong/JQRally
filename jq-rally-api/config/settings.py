@@ -164,7 +164,7 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
-    'https://jqrally-web.netlify.app',
+    'https://gentle-sand-0b8386900.azurestaticapps.net',
 )
 
 try:
