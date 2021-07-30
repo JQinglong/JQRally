@@ -1,6 +1,6 @@
 import { NuxtAxiosInstance } from '@nuxtjs/axios'
 import {
-  EventSpotType as ResourceType,
+  EventUserType as ResourceType,
   ResponseType,
   ResponseTypes,
   CustomErrors,
@@ -9,7 +9,7 @@ import {
 import { LIMIT_LIST_ITEM } from '@/constants'
 
 type Id = ResourceType['id']
-const res = 'event_spot'
+const res = 'event_user'
 
 // 追加フィルタが必要な場合は独自にinterface定義する
 // export interface ListRequest {
@@ -21,20 +21,20 @@ const res = 'event_spot'
 
 // Pick 第1引数から第2引数以降で指定したkey値とその値で構成されたObjectを返す。
 // PickではなくOmmit
-export type CreateEventSpotRequest = Omit<
+export type CreateEventUserRequest = Omit<
 ResourceType,
   'id'
 >
-export type UpdateEventSpotPayload = Partial<CreateEventSpotRequest>
-export type UpdateEventSpotRequest = {
-  payload: UpdateEventSpotPayload
+export type UpdateEventUserPayload = Partial<CreateEventUserRequest>
+export type UpdateEventUserRequest = {
+  payload: UpdateEventUserPayload
   id: Id
 }
 
 type Response = ResponseType<ResourceType>
 type ListResponse = ResponseTypes<ResourceType[]>
 
-export const eventSpotRepository = (axios: NuxtAxiosInstance) => ({
+export const eventUserRepository = (axios: NuxtAxiosInstance) => ({
   get (id: Id): Response {
     return axios.$get(`/${res}/${id}`)
   },
@@ -50,10 +50,10 @@ export const eventSpotRepository = (axios: NuxtAxiosInstance) => ({
       params: { ...defaultParam, limit, offset }
     })
   },
-  create (payload: CreateEventSpotRequest): Response | CustomErrors {
+  create (payload: CreateEventUserRequest): Response | CustomErrors {
     return axios.$post(`/${res}/`, payload)
   },
-  update (request: UpdateEventSpotRequest): Response | CustomErrors {
+  update (request: UpdateEventUserRequest): Response | CustomErrors {
     return axios.$put(`/${res}/${request.id}/`, request.payload)
   },
   delete (id: Id) {
@@ -62,4 +62,4 @@ export const eventSpotRepository = (axios: NuxtAxiosInstance) => ({
 
 })
 
-export type EventSpotRepository = ReturnType<typeof eventSpotRepository>
+export type EventUserRepository = ReturnType<typeof eventUserRepository>

@@ -16,6 +16,7 @@
       </v-alert>
       <MemoTable />
       <EventTable />
+      <EventSpotTable />
     </v-col>
     <v-col cols="6" md="4">
       <v-card>

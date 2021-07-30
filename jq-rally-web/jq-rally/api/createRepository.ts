@@ -3,13 +3,31 @@ import {
   memoRepository,
   MemoRepository,
   eventRepository,
-  EventRepository
+  EventRepository,
+  eventSpotRepository,
+  EventSpotRepository,
+  userRepository,
+  UserRepository,
+  eventUserRepository,
+  EventUserRepository,
+  userSpotRepository,
+  UserSpotRepository,
+  userSpotPhotoRepository,
+  UserSpotPhotoRepository,
+  userSpotCommentRepository,
+  UserSpotCommentRepository
 } from '@/api'
 import { ErrorType } from '@/constants'
 
 export type Repository = {
   memo: MemoRepository,
-  event: EventRepository
+  event: EventRepository,
+  eventSpot: EventSpotRepository,
+  user: UserRepository,
+  eventUser: EventUserRepository,
+  userSpot: UserSpotRepository,
+  userSpotPhoto: UserSpotPhotoRepository,
+  userSpotComment: UserSpotCommentRepository
 }
 
 /**
@@ -49,7 +67,13 @@ const createRepository = ({ app, $axios, redirect }: Context): Repository => {
 
   return {
     memo: memoRepository($axios),
-    event: eventRepository($axios)
+    event: eventRepository($axios),
+    eventSpot: eventSpotRepository($axios),
+    user: userRepository($axios),
+    eventUser: eventUserRepository($axios),
+    userSpot: userSpotRepository($axios),
+    userSpotPhoto: userSpotPhotoRepository($axios),
+    userSpotComment: userSpotCommentRepository($axios)
   }
 }
 

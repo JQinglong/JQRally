@@ -1,10 +1,10 @@
 import { reactive, useContext } from '@nuxtjs/composition-api'
-import { CreateEventRequest, UpdateEventRequest } from '@/api/eventRepository'
-import { EventType as ResourceType, ListRequestType } from '@/types'
+import { CreateEventSpotRequest, UpdateEventSpotRequest } from '@/api/eventSpotRepository'
+import { EventSpotType as ResourceType, ListRequestType } from '@/types'
 // import MemoKey from '~/store/memo-key';
-import { defaultEventItem as defaultItem } from '@/compositions/util/const'
+import { defaultEventSpotItem as defaultItem } from '@/compositions/util/const'
 
-type ResourcePayload = Required<CreateEventRequest>
+type ResourcePayload = Required<CreateEventSpotRequest>
 type CreateState = ResourcePayload
 type State = {
   resourceData: ResourceType
@@ -17,7 +17,7 @@ const initCreateState = defaultItem
 //   event: defaultItem
 // }
 
-export default function useEvent () {
+export default function useEventSpot () {
   const { $repository } = useContext()
 
   const createState = reactive<CreateState>(initCreateState)
@@ -28,7 +28,7 @@ export default function useEvent () {
     resourceCount: 0
   })
   const getData = async (id: ResourceType['id']) => {
-    const data = await $repository.event.get(id)
+    const data = await $repository.eventSpot.get(id)
     // console.log('memoid', memoid)
     // console.log('getMemo', memoData)
 
@@ -36,15 +36,15 @@ export default function useEvent () {
   }
 
   const getList = async (payload: ListRequestType = {}) => {
-    const list = await $repository.event.getList(payload)
+    const list = await $repository.eventSpot.getList(payload)
 
     // console.log('memos', memos)
     state.resourceList = list
     state.resourceCount = list.length
   }
 
-  const createData = async (payload: CreateEventRequest) => {
-    const response = await $repository.event.create(payload)
+  const createData = async (payload: CreateEventSpotRequest) => {
+    const response = await $repository.eventSpot.create(payload)
 
     // console.log('createMemo response', response)
     if (response) {
@@ -55,8 +55,8 @@ export default function useEvent () {
     return false
   }
 
-  const updateData = async (payload: UpdateEventRequest) => {
-    const data = await $repository.event.update(payload)
+  const updateData = async (payload: UpdateEventSpotRequest) => {
+    const data = await $repository.eventSpot.update(payload)
 
     if (data) {
       return data
@@ -66,7 +66,7 @@ export default function useEvent () {
   }
 
   const deleteData = async (id: ResourceType['id']) => {
-    await $repository.event.delete(id)
+    await $repository.eventSpot.delete(id)
     await getList()
   }
   return {

@@ -21,13 +21,13 @@ const res = 'event'
 
 // Pick 第1引数から第2引数以降で指定したkey値とその値で構成されたObjectを返す。
 // PickではなくOmmit
-export type CreateRequest = Omit<
+export type CreateEventRequest = Omit<
 ResourceType,
   'id'
 >
-export type UpdatePayload = Partial<CreateRequest>
-export type UpdateRequest = {
-  payload: UpdatePayload
+export type UpdateEventPayload = Partial<CreateEventRequest>
+export type UpdateEventRequest = {
+  payload: UpdateEventPayload
   id: Id
 }
 
@@ -50,10 +50,10 @@ export const eventRepository = (axios: NuxtAxiosInstance) => ({
       params: { ...defaultParam, limit, offset }
     })
   },
-  create (payload: CreateRequest): Response | CustomErrors {
+  create (payload: CreateEventRequest): Response | CustomErrors {
     return axios.$post(`/${res}/`, payload)
   },
-  update (request: UpdateRequest): Response | CustomErrors {
+  update (request: UpdateEventRequest): Response | CustomErrors {
     return axios.$put(`/${res}/${request.id}/`, request.payload)
   },
   delete (id: Id) {
