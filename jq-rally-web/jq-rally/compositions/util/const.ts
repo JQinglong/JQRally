@@ -1,7 +1,12 @@
-import { MemoType } from "@/types";
+import { MemoType, EventType } from '@/types'
 
 export const defaultMemoItem: MemoType = {
   id: 0,
   title: '',
-  memo: '',
-};
+  memo: ''
+}
+
+export const defaultEventItem: EventType = {
+  id: '',
+  name: ''
+}

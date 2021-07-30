@@ -40,7 +40,6 @@ class EventSpotViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    filter_fields = ('user', )
 
 class EventUserViewSet(viewsets.ModelViewSet):
     queryset = EventUser.objects.all()

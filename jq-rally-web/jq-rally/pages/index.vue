@@ -12,9 +12,10 @@
         elevation="1"
         dense
       >
-      Memo一覧
+        Memo一覧
       </v-alert>
       <MemoTable />
+      <EventTable />
     </v-col>
     <v-col cols="6" md="4">
       <v-card>
@@ -25,7 +26,7 @@
           elevation="1"
           dense
         >
-        LATEST
+          LATEST
         </v-alert>
         <MemoList />
       </v-card>
@@ -38,16 +39,15 @@
           elevation="1"
           dense
         >
-        EDITOR'S PICK
+          EDITOR'S PICK
         </v-alert>
         <v-img
-            height="250"
-            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-          ></v-img>
-          <v-card-title class="headline">
-            Welcome to the Vuetify + Nuxt.js template
-          </v-card-title>
-
+          height="250"
+          src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        />
+        <v-card-title class="headline">
+          Welcome to the Vuetify + Nuxt.js template
+        </v-card-title>
       </v-card>
     </v-col>
   </v-row>

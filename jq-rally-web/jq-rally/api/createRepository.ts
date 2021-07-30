@@ -2,11 +2,14 @@ import { Context } from '@nuxt/types'
 import {
   memoRepository,
   MemoRepository,
+  eventRepository,
+  EventRepository
 } from '@/api'
 import { ErrorType } from '@/constants'
 
 export type Repository = {
-  memo: MemoRepository
+  memo: MemoRepository,
+  event: EventRepository
 }
 
 /**
@@ -15,7 +18,7 @@ export type Repository = {
  */
 const createRepository = ({ app, $axios, redirect }: Context): Repository => {
   $axios.onError((error) => {
-    console.log('createRepository error', error, error.response?.data)
+    // console.log('createRepository error', error, error.response?.data)
     if (!error.response) {
       return
     }
@@ -42,10 +45,11 @@ const createRepository = ({ app, $axios, redirect }: Context): Repository => {
     }
   })
 
-  console.log('createRepository', $axios)
+  // console.log('createRepository', $axios)
 
   return {
     memo: memoRepository($axios),
+    event: eventRepository($axios)
   }
 }
 
