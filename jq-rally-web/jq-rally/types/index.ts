@@ -23,6 +23,7 @@ export interface MemoType {
 export interface EventType {
   id: string
   name: string
+  eventImg: string
 }
 
 export interface EventSpotType {
@@ -30,6 +31,7 @@ export interface EventSpotType {
   event: EventType
   name: string
   description: string
+  spotImg: string
   address: string
   latitude: number
   longitude: number

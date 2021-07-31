@@ -6,9 +6,24 @@ class Memo(models.Model):
     title = models.CharField(max_length=64)
     memo = models.TextField(max_length=1024)
 
-class Event(models.Model):
+class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=64)
+    mail = models.CharField(max_length=256, blank=True, null=True)
+    comment = models.TextField(blank=True, null=True)
+    def __str__(self):
+        return self.name
+
+class Event(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    event_img = models.CharField(max_length=256, blank=True, null=True)
+    name = models.CharField(max_length=64)
+    description = models.CharField(max_length=256, blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    disp_start_date = models.DateField(blank=True, null=True)
+    disp_end_date = models.DateField(blank=True, null=True)
+    admin_user = models.ForeignKey(User, on_delete=models.PROTECT)
     def __str__(self):
         return self.name
 
@@ -17,18 +32,11 @@ class EventSpot(models.Model):
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
     name = models.CharField(max_length=64)
     description = models.CharField(max_length=256, blank=True, null=True)
+    spot_img = models.CharField(max_length=256, blank=True, null=True)
     address = models.CharField(max_length=256, blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
     stamp_img = models.CharField(max_length=256, blank=True, null=True)
-    def __str__(self):
-        return self.name
-
-class User(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=64)
-    mail = models.CharField(max_length=256, blank=True, null=True)
-    comment = models.TextField(blank=True, null=True)
     def __str__(self):
         return self.name
 

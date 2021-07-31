@@ -3,10 +3,12 @@ import django_filters
 from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import viewsets, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Memo
 from .serializer import MemoSerializer
 from .models import Event
 from .serializer import EventSerializer
+from .filters import EventFilter
 from .models import EventSpot
 from .serializer import EventSpotSerializer
 from .models import User
@@ -29,8 +31,13 @@ class MemoViewSet(viewsets.ModelViewSet):
     serializer_class = MemoSerializer
 
 class EventViewSet(viewsets.ModelViewSet):
+    # queryset = Event.objects.order_by('start_date')
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filterset_class = EventFilter
+    search_fields = ['name', 'description']
+    ordering_fields = ['start_date']
 
 class EventSpotViewSet(viewsets.ModelViewSet):
     queryset = EventSpot.objects.all()

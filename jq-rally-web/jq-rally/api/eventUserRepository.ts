@@ -32,7 +32,7 @@ export type UpdateEventUserRequest = {
 }
 
 type Response = ResponseType<ResourceType>
-type ListResponse = ResponseTypes<ResourceType[]>
+type ListResponse = ResponseTypes<{count: number, next: ResourceType[], previous: ResourceType[], results: ResourceType[] }>
 
 export const eventUserRepository = (axios: NuxtAxiosInstance) => ({
   get (id: Id): Response {

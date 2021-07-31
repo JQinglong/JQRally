@@ -8,7 +8,8 @@ export const defaultMemoItem: MemoType = {
 
 export const defaultEventItem: EventType = {
   id: '',
-  name: ''
+  name: '',
+  eventImg: ''
 }
 
 export const defaultEventSpotItem: EventSpotType = {
@@ -16,6 +17,7 @@ export const defaultEventSpotItem: EventSpotType = {
   event: defaultEventItem,
   name: '',
   description: '',
+  spotImg: '',
   address: '',
   latitude: 0,
   longitude: 0,

@@ -39,8 +39,8 @@ export default function useUserSpotPhoto () {
     const list = await $repository.userSpotPhoto.getList(payload)
 
     // console.log('memos', memos)
-    state.resourceList = list
-    state.resourceCount = list.length
+    state.resourceList = list.results
+    state.resourceCount = list.count
   }
 
   const createData = async (payload: CreateUserSpotPhotoRequest) => {

@@ -38,9 +38,9 @@ export default function useEventSpot () {
   const getList = async (payload: ListRequestType = {}) => {
     const list = await $repository.eventSpot.getList(payload)
 
-    // console.log('memos', memos)
-    state.resourceList = list
-    state.resourceCount = list.length
+    // console.log('useEventSpot list', list.results)
+    state.resourceList = list.results
+    state.resourceCount = list.count
   }
 
   const createData = async (payload: CreateEventSpotRequest) => {

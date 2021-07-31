@@ -39,8 +39,8 @@ export default function useEventUser () {
     const list = await $repository.eventUser.getList(payload)
 
     // console.log('memos', memos)
-    state.resourceList = list
-    state.resourceCount = list.length
+    state.resourceList = list.results
+    state.resourceCount = list.count
   }
 
   const createData = async (payload: CreateEventUserRequest) => {

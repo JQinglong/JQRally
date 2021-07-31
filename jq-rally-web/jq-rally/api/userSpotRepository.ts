@@ -32,7 +32,7 @@ export type UpdateUserSpotRequest = {
 }
 
 type Response = ResponseType<ResourceType>
-type ListResponse = ResponseTypes<ResourceType[]>
+type ListResponse = ResponseTypes<{count: number, next: ResourceType[], previous: ResourceType[], results: ResourceType[] }>
 
 export const userSpotRepository = (axios: NuxtAxiosInstance) => ({
   get (id: Id): Response {

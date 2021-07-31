@@ -12,7 +12,7 @@
         elevation="1"
         dense
       >
-        Memo一覧
+        イベント一覧
       </v-alert>
       <MemoTable />
       <EventTable />
@@ -27,9 +27,9 @@
           elevation="1"
           dense
         >
-          LATEST
+          最新イベント情報
         </v-alert>
-        <MemoList />
+        <EventList />
       </v-card>
       <br>
       <v-card>
@@ -40,7 +40,7 @@
           elevation="1"
           dense
         >
-          EDITOR'S PICK
+          ピックアップ イベント
         </v-alert>
         <v-img
           height="250"

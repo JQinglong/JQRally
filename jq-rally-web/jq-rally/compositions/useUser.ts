@@ -39,8 +39,8 @@ export default function useUser () {
     const list = await $repository.user.getList(payload)
 
     // console.log('memos', memos)
-    state.resourceList = list
-    state.resourceCount = list.length
+    state.resourceList = list.results
+    state.resourceCount = list.count
   }
 
   const createData = async (payload: CreateUserRequest) => {

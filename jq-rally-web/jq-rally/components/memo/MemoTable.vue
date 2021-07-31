@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card dense>
-      <v-data-table :headers="headers" :items="memoList" :search="search" dense>
+      <v-data-table :headers="headers" :items="memoList.results" :search="search" dense>
         <template v-slot:top>
           <v-toolbar dense class="mb-1">
             <v-text-field

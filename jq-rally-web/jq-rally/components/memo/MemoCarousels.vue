@@ -7,7 +7,7 @@
       height="300"
     >
       <v-carousel-item
-        v-for="(memo, i) in memoList"
+        v-for="(memo, i) in memoList.results"
         :key="i"
       >
           <v-card>

@@ -39,8 +39,8 @@ export default function useEvent () {
     const list = await $repository.event.getList(payload)
 
     // console.log('memos', memos)
-    state.resourceList = list
-    state.resourceCount = list.length
+    state.resourceList = list.results
+    state.resourceCount = list.count
   }
 
   const createData = async (payload: CreateEventRequest) => {

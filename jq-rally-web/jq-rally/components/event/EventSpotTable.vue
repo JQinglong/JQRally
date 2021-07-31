@@ -50,6 +50,7 @@ export default defineComponent({
 
     const fetchData = async (offset = 0) => {
       await getList({ offset })
+      console.log('eventSpotState.resourceList.results', eventSpotState.resourceList.results)
     }
 
     const { fetchState } = useFetch(() => fetchData())
