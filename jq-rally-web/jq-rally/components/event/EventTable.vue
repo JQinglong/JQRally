@@ -17,7 +17,9 @@
           </v-toolbar>
         </template>
         <template #[`item.actions`]="{ item }">
-          <v-icon> mdi-note </v-icon>
+          <v-icon @click="$router.push(`/event/${item.id}/`)">
+            mdi-note
+          </v-icon>
         </template>
       </v-data-table>
     </v-card>

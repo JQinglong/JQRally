@@ -1,5 +1,5 @@
 import { reactive, useContext } from '@nuxtjs/composition-api'
-import { CreateEventSpotRequest, UpdateEventSpotRequest } from '@/api/eventSpotRepository'
+import { CreateEventSpotRequest, UpdateEventSpotRequest, EventSpotListRequest } from '@/api/eventSpotRepository'
 import { EventSpotType as ResourceType, ListRequestType } from '@/types'
 // import MemoKey from '~/store/memo-key';
 import { defaultEventSpotItem as defaultItem } from '@/compositions/util/const'
@@ -35,10 +35,9 @@ export default function useEventSpot () {
     state.resourceData = data
   }
 
-  const getList = async (payload: ListRequestType = {}) => {
+  const getList = async (payload: EventSpotListRequest = {}) => {
     const list = await $repository.eventSpot.getList(payload)
 
-    // console.log('useEventSpot list', list.results)
     state.resourceList = list.results
     state.resourceCount = list.count
   }

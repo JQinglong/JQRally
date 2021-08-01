@@ -1,7 +1,7 @@
 <template>
   <div>
+    itiran
     <v-card dense>
-      {{ eventSpotState.resourceList }}
       <v-data-table :headers="headers" :items="eventSpotState.resourceList" :search="search" dense>
         <template #top>
           <v-toolbar dense class="mb-1">
@@ -17,7 +17,7 @@
             />
           </v-toolbar>
         </template>
-        <template #[`item.actions`]="{ item }">
+        <template #[`item.actions`]="{ }">
           <v-icon> mdi-note </v-icon>
         </template>
       </v-data-table>
@@ -35,8 +35,14 @@ import {
 import { useEventSpot } from '@/compositions'
 
 export default defineComponent({
-  name: 'EventSpotTable',
-  setup () {
+  name: 'SpotTable',
+  props: {
+    eventId: {
+      type: String,
+      required: true
+    }
+  },
+  setup (props) {
     const headers = [
       { text: 'イベント名', value: 'name' },
       { text: '', value: 'actions' }
@@ -48,10 +54,11 @@ export default defineComponent({
     })
     const { state: eventSpotState, getList } = useEventSpot()
 
-    const fetchData = async (offset = 0) => {
-      await getList({ offset })
-      console.log('eventSpotState.resourceList.results', eventSpotState.resourceList.results)
+    const fetchData = async () => {
+      await getList({ event: props.eventId })
     }
+
+    // console.log('props.eventId', props.eventId)
 
     const { fetchState } = useFetch(() => fetchData())
 

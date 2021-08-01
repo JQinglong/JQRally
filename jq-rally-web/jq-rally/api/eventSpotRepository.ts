@@ -12,12 +12,13 @@ type Id = ResourceType['id']
 const res = 'event_spot'
 
 // 追加フィルタが必要な場合は独自にinterface定義する
-// export interface ListRequest {
-//   limit?: number
-//   offset?: number
-//   ministry?: string
-//   person?: string
-// }
+export interface EventSpotListRequest {
+  limit?: number
+  offset?: number
+  event?: string
+  search?: string
+  ordering?: string
+}
 
 // Pick 第1引数から第2引数以降で指定したkey値とその値で構成されたObjectを返す。
 // PickではなくOmmit
@@ -41,13 +42,16 @@ export const eventSpotRepository = (axios: NuxtAxiosInstance) => ({
 
   getList ({
     limit = LIMIT_LIST_ITEM,
-    offset = 0
-  }: ListRequestType = {}): ListResponse {
+    offset = 0,
+    event = '',
+    search = '',
+    ordering = 'order'
+  }: EventSpotListRequest = {}): ListResponse {
     const defaultParam = {
     }
 
     return axios.$get(`/${res}/`, {
-      params: { ...defaultParam, limit, offset }
+      params: { ...defaultParam, limit, offset, event, search, ordering }
     })
   },
   create (payload: CreateEventSpotRequest): Response | CustomErrors {

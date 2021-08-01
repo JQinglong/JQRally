@@ -18,7 +18,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <v-divider></v-divider>
+      <v-divider />
       <v-list dense>
         <v-list-item
           v-for="(item, i) in adminitems"
@@ -41,13 +41,15 @@
     <v-app-bar app clipped-left color="green accent-1" dense>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn icon :to="'/'">
-        <v-icon class="mx-4" large> mdi-postage-stamp </v-icon>
+        <v-icon class="mx-4" large>
+          mdi-postage-stamp
+        </v-icon>
       </v-btn>
       <v-toolbar-title class="mr-12 align-center">
-        <span class="title">サイト名</span>
+        <span class="title">Let's スタンプラリー</span>
       </v-toolbar-title>
 
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-btn icon>
         <v-icon>mdi-twitter</v-icon>
       </v-btn>
@@ -58,12 +60,11 @@
         <v-icon>mdi-instagram</v-icon>
       </v-btn>
 
-
       <v-menu
         left
         bottom
       >
-        <template v-slot:activator="{ on, attrs }">
+        <template #activator="{ on, attrs }">
           <v-btn
             icon
             v-bind="attrs"
@@ -84,12 +85,13 @@
         </v-list>
       </v-menu>
 
-      <template v-slot:extension>
+      <template #extension>
         <v-tabs
           background-color="white"
           align-with-title
-        ><!-- >v-model="tab" は削除している-->
-          <v-tabs-slider color="blue"></v-tabs-slider>
+        >
+          <!-- >v-model="tab" は削除している-->
+          <v-tabs-slider color="blue" />
           <v-tab
             v-for="item in tabitems"
             :key="item.title"
@@ -114,7 +116,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "@vue/composition-api";
+import { defineComponent, ref } from '@vue/composition-api'
 // import { provideGlobalState, injectGlobalState } from '@/compositions/states/user'
 // import { auth } from '~/plugins/firebase.config'
 // import { SignOut } from '~/compositions/firebase/auth'
@@ -126,18 +128,19 @@ type Item = {
 };
 
 export default defineComponent({
-  name: "DefaultLayout",
+  name: 'DefaultLayout',
 
-  setup(props: any, { root }) {
-    const clipped = ref(false);
-    const drawer = ref(false);
-    const fixed = ref(false);
+  // eslint-disable-next-line no-empty-pattern
+  setup () {
+    const clipped = ref(false)
+    const drawer = ref(false)
+    const fixed = ref(false)
 
     const items = ref<Item[]>([
       {
-        icon: "mdi-home",
-        title: "ホーム",
-        to: "/",
+        icon: 'mdi-home',
+        title: 'ホーム',
+        to: '/'
       },
       // {
       //   icon: 'mdi-apps',
@@ -145,41 +148,41 @@ export default defineComponent({
       //   to: '/memo'
       // },
       {
-        icon: "mdi-forum",
-        title: "メニュー１",
-        to: "/menu1",
+        icon: 'mdi-forum',
+        title: 'メニュー１',
+        to: '/menu1'
       },
       {
-        icon: "mdi-tooltip-account",
-        title: "メニュー２",
-        to: "/menu2",
+        icon: 'mdi-tooltip-account',
+        title: 'メニュー２',
+        to: '/menu2'
       },
       {
-        icon: "mdi-bookmark",
-        title: "メニュー３",
-        to: "/menu3",
-      },
-    ]);
+        icon: 'mdi-bookmark',
+        title: 'メニュー３',
+        to: '/menu3'
+      }
+    ])
     const adminitems = ref<Item[]>([
       {
-        icon: "mdi-pencil",
-        title: "Memo",
-        to: "/memo",
-      },
-    ]);
+        icon: 'mdi-pencil',
+        title: 'Memo',
+        to: '/memo'
+      }
+    ])
 
     const tabitems = ref<Item[]>([
       {
-        icon: "mdi-pencil",
-        title: "Memo",
-        to: "/memo",
+        icon: 'mdi-pencil',
+        title: 'Memo',
+        to: '/memo'
       },
       {
-        icon: "mdi-forum",
-        title: "メニュー１",
-        to: "/menu1",
-      },
-    ]);
+        icon: 'mdi-forum',
+        title: 'メニュー１',
+        to: '/menu1'
+      }
+    ])
 
     // provideGlobalState()
     // const stateGlobal = injectGlobalState()
@@ -216,12 +219,12 @@ export default defineComponent({
       fixed,
       items,
       tabitems,
-      adminitems,
+      adminitems
       // stateGlobal,
       // signOut,
-    };
-  },
-});
+    }
+  }
+})
 </script>
 
 <style scoped>

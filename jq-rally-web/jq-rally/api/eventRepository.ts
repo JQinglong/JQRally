@@ -12,7 +12,7 @@ type Id = ResourceType['id']
 const res = 'event'
 
 // 追加フィルタが必要な場合は独自にinterface定義する
-export interface ListRequest {
+export interface EventListRequest {
   limit?: number
   offset?: number
   dispStart?: Date
@@ -48,7 +48,7 @@ export const eventRepository = (axios: NuxtAxiosInstance) => ({
     dispEnd = new Date(),
     search = '',
     ordering = 'start_date'
-  }: ListRequest = {}): ListResponse {
+  }: EventListRequest = {}): ListResponse {
     const defaultParam = {
     }
 

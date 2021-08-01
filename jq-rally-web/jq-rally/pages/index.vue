@@ -2,7 +2,7 @@
   <v-row justify="center" align="start">
     <v-col cols="12" sm="6" md="8">
       <v-card class="logo py-4 d-flex justify-center">
-        <MemoCarousels />
+        <EventCarousels />
       </v-card>
       <br>
       <v-alert
@@ -12,11 +12,20 @@
         elevation="1"
         dense
       >
-        イベント一覧
+        開催中のイベント一覧
       </v-alert>
-      <MemoTable />
       <EventTable />
-      <EventSpotTable />
+      <br>
+      <v-alert
+        border="left"
+        colored-border
+        color="teal"
+        elevation="1"
+        dense
+      >
+        過去のイベント
+      </v-alert>
+      <EventTable />
     </v-col>
     <v-col cols="6" md="4">
       <v-card>

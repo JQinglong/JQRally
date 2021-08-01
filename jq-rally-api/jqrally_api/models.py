@@ -37,6 +37,7 @@ class EventSpot(models.Model):
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
     stamp_img = models.CharField(max_length=256, blank=True, null=True)
+    order = models.IntegerField()
     def __str__(self):
         return self.name
 
