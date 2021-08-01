@@ -36,14 +36,16 @@
           </v-col>
           <v-col cols="6">
             <v-card>
-              参加者一覧・ランキング
-              <v-card-actions>
-                <v-spacer />
-
-                <v-btn icon>
-                  <v-icon>mdi-heart</v-icon>
-                </v-btn>
-              </v-card-actions>
+              <v-alert
+                border="left"
+                colored-border
+                color="teal"
+                elevation="1"
+                dense
+              >
+                参加者一覧・ランキング
+              </v-alert>
+              <event-user-table :event-id="eventId" />
             </v-card>
           </v-col>
           <v-col cols="2">
@@ -72,9 +74,11 @@ import {
   defineComponent
 } from '@nuxtjs/composition-api'
 import { useEvent } from '@/compositions'
+import EventUserTable from '../user/EventUserTable.vue'
 
 export default defineComponent({
   name: 'EventInfo',
+  components: { EventUserTable },
   props: {
     eventId: {
       type: String,

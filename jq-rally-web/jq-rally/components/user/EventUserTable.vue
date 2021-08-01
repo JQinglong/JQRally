@@ -1,21 +1,7 @@
 <template>
   <div>
     <v-card dense>
-      <v-data-table :headers="headers" :items="eventSpotState.resourceList" :search="search" dense>
-        <template #top>
-          <v-toolbar dense class="mb-1">
-            <v-text-field
-              v-model="search"
-              dense
-              clearable
-              flat
-              solo-inverted
-              hide-details
-              prepend-inner-icon="mdi-magnify"
-              label="Search"
-            />
-          </v-toolbar>
-        </template>
+      <v-data-table :headers="headers" :items="eventUserState.resourceList" dense>
         <template #[`item.actions`]="{ }">
           <v-icon> mdi-note </v-icon>
         </template>
@@ -31,10 +17,10 @@ import {
   useFetch,
   defineComponent
 } from '@nuxtjs/composition-api'
-import { useEventSpot } from '@/compositions'
+import { useEventSpot, useEventUser } from '@/compositions'
 
 export default defineComponent({
-  name: 'SpotTable',
+  name: 'EventUserTable',
   props: {
     eventId: {
       type: String,
@@ -43,7 +29,7 @@ export default defineComponent({
   },
   setup (props) {
     const headers = [
-      { text: 'イベント名', value: 'name' },
+      { text: '参加者名', value: 'user.name' },
       { text: '', value: 'actions' }
     ]
     const state = reactive({
@@ -51,7 +37,7 @@ export default defineComponent({
       filter: {},
       sortDesc: false
     })
-    const { state: eventSpotState, getList } = useEventSpot()
+    const { state: eventUserState, getList } = useEventUser()
 
     const fetchData = async () => {
       await getList({ event: props.eventId })
@@ -64,7 +50,7 @@ export default defineComponent({
     return {
       headers,
       ...toRefs(state),
-      eventSpotState,
+      eventUserState,
       fetchState
     }
   }

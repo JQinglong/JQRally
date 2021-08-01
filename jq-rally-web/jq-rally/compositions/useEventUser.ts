@@ -1,5 +1,5 @@
 import { reactive, useContext } from '@nuxtjs/composition-api'
-import { CreateEventUserRequest, UpdateEventUserRequest } from '@/api/eventUserRepository'
+import { CreateEventUserRequest, UpdateEventUserRequest, EventUserListRequest } from '@/api/eventUserRepository'
 import { EventUserType as ResourceType, ListRequestType } from '@/types'
 // import MemoKey from '~/store/memo-key';
 import { defaultEventUserItem as defaultItem } from '@/compositions/util/const'
@@ -35,7 +35,7 @@ export default function useEventUser () {
     state.resourceData = data
   }
 
-  const getList = async (payload: ListRequestType = {}) => {
+  const getList = async (payload: EventUserListRequest = {}) => {
     const list = await $repository.eventUser.getList(payload)
 
     // console.log('memos', memos)
