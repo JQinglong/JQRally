@@ -1,5 +1,5 @@
 import { reactive, useContext } from '@nuxtjs/composition-api'
-import { CreateUserSpotPhotoRequest, UpdateUserSpotPhotoRequest } from '@/api/userSpotPhotoRepository'
+import { CreateUserSpotPhotoRequest, UpdateUserSpotPhotoRequest, UserSpotPhotoListRequest } from '@/api/userSpotPhotoRepository'
 import { UserSpotPhotoType as ResourceType, ListRequestType } from '@/types'
 // import MemoKey from '~/store/memo-key';
 import { defaultUserSpotPhotoItem as defaultItem } from '@/compositions/util/const'
@@ -35,7 +35,7 @@ export default function useUserSpotPhoto () {
     state.resourceData = data
   }
 
-  const getList = async (payload: ListRequestType = {}) => {
+  const getList = async (payload: UserSpotPhotoListRequest = {}) => {
     const list = await $repository.userSpotPhoto.getList(payload)
 
     // console.log('memos', memos)

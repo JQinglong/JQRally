@@ -1,5 +1,5 @@
 import { reactive, useContext } from '@nuxtjs/composition-api'
-import { CreateUserSpotCommentRequest, UpdateUserSpotCommentRequest } from '@/api/userSpotCommentRepository'
+import { CreateUserSpotCommentRequest, UpdateUserSpotCommentRequest, UserSpotCommentListRequest } from '@/api/userSpotCommentRepository'
 import { UserSpotCommentType as ResourceType, ListRequestType } from '@/types'
 // import MemoKey from '~/store/memo-key';
 import { defaultUserSpotCommentItem as defaultItem } from '@/compositions/util/const'
@@ -35,7 +35,7 @@ export default function useUserSpotComment () {
     state.resourceData = data
   }
 
-  const getList = async (payload: ListRequestType = {}) => {
+  const getList = async (payload: UserSpotCommentListRequest = {}) => {
     const list = await $repository.userSpotComment.getList(payload)
 
     // console.log('memos', memos)

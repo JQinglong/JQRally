@@ -29,6 +29,7 @@
               >
                 みんなの写真
               </v-alert>
+              <spot-photo-table :spot-id="spotId" />
             </v-card>
           </v-col>
           <v-col cols="6">
@@ -42,6 +43,7 @@
               >
                 みんなのコメント
               </v-alert>
+              <spot-comment-table :spot-id="spotId" />
             </v-card>
           </v-col>
         </v-row>
@@ -58,9 +60,12 @@ import {
   defineComponent
 } from '@nuxtjs/composition-api'
 import { useEventSpot } from '@/compositions'
+import SpotPhotoTable from './SpotPhotoTable.vue'
+import SpotCommentTable from './SpotCommentTable.vue'
 
 export default defineComponent({
   name: 'SpotInfo',
+  components: { SpotPhotoTable, SpotCommentTable },
   props: {
     spotId: {
       type: String,
@@ -76,7 +81,7 @@ export default defineComponent({
     const { state: eventState, getData } = useEventSpot()
 
     const fetchData = async () => {
-      console.log('props.spotId', props.spotId)
+      // console.log('props.spotId', props.spotId)
       await getData(props.spotId)
     }
 
