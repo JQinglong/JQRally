@@ -64,9 +64,9 @@ export interface UserSpotPhotoType {
   user: UserType
   event: EventType
   spot: EventSpotType
-  stamp: string
-  visitDate: Date
-  photo: string
+  // eslint-disable-next-line camelcase
+  visit_date: Date
+  photo: File
 }
 
 export interface UserSpotCommentType {
@@ -74,7 +74,7 @@ export interface UserSpotCommentType {
   user: UserType
   event: EventType
   spot: EventSpotType
-  stamp: string
-  visitDate: Date
+  // eslint-disable-next-line camelcase
+  visit_date: Date
   comment: string
 }

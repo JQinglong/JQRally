@@ -52,7 +52,35 @@ export const userSpotPhotoRepository = (axios: NuxtAxiosInstance) => ({
     })
   },
   create (payload: CreateUserSpotPhotoRequest): Response | CustomErrors {
-    return axios.$post(`/${res}/`, payload)
+    // eslint-disable-next-line no-console
+    // console.log(payload)
+    // console.log(payload.photo)
+    // FormDataに詰め替え
+    const data = new FormData()
+    data.append('user_id', payload.user.id)
+    data.append('spot_id', payload.spot.id)
+    data.append('event_id', payload.event.id)
+    const dt = '' + payload.visit_date
+    // eslint-disable-next-line no-console
+    // const dtstr = dt.getFullYear() + '-' + ('00' + (dt.getMonth() + 1)).slice(-2) + '-' + ('00' + dt.getDate()).slice(-2)
+
+    data.append('visit_date', dt)
+    if (payload.photo) {
+      data.append('photo', payload.photo, payload.photo.name)
+    }
+
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }
+    // return axios.$post(`/${res}/`, payload)
+    // eslint-disable-next-line no-console
+    console.log('data', data, data.getAll('user'))
+    return axios.$post(`/${res}/`, data, config)
+      .catch((error) => {
+        return error.response
+      })
   },
   update (request: UpdateUserSpotPhotoRequest): Response | CustomErrors {
     return axios.$put(`/${res}/${request.id}/`, request.payload)

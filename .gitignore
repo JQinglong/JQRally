@@ -7,3 +7,5 @@ jq-rally-db/mysql/
 docs/dmp/
 diagram
 jq-rally-web/jq-rally/.env
+jq-rally-api/media/CACHE/images/photos/*
+jq-rally-api/media/photos/*

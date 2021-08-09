@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'django_filters',
+    'imagekit',
 ]
 
 MIDDLEWARE = [
@@ -173,6 +174,13 @@ CORS_ORIGIN_WHITELIST = (
     'https://gentle-sand-0b8386900.azurestaticapps.net',
 )
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
+IMAGEKIT_DEFAULT_CACHEFILE_STRATEGY = 'imagekit.cachefiles.strategies.Optimistic'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+
+
 try:
     from .local_settings import *
     print('import')
@@ -181,6 +189,9 @@ except ImportError as e:
     print(e)
     if not DEBUG:
         SECRET_KEY = os.environ['SECRET_KEY']
+        AZURE_ACCOUNT_NAME = os.environ['AZURE_ACCOUNT_NAME']
+        AZURE_ACCOUNT_KEY = os.environ['AZURE_ACCOUNT_KEY']
+        AZURE_CONTAINER = os.environ['AZURE_CONTAINER']
 
 try:
 

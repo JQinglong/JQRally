@@ -44,14 +44,19 @@ export default function useUserSpotPhoto () {
   }
 
   const createData = async (payload: CreateUserSpotPhotoRequest) => {
-    const response = await $repository.userSpotPhoto.create(payload)
+    try {
+      const response = await $repository.userSpotPhoto.create(payload)
 
-    // console.log('createMemo response', response)
-    if (response) {
-      await getList()
-      return response
+      // eslint-disable-next-line no-console
+      console.log('userSpotPhoto.create response', response)
+      if (response) {
+        await getList()
+        return response
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('userSpotPhoto.create error', error)
     }
-
     return false
   }
 

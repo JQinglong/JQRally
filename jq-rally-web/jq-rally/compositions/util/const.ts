@@ -24,10 +24,16 @@ export const defaultEventSpotItem: EventSpotType = {
   stampImg: ''
 }
 
+// export const defaultUserItem: UserType = {
+//   id: '',
+//   name: '',
+//   mail: '',
+//   comment: ''
+// }
 export const defaultUserItem: UserType = {
-  id: '',
-  name: '',
-  mail: '',
+  id: '3cd8251f-fff4-4b4f-b430-63e4a5e19d2d',
+  name: '金野',
+  mail: 'konnokiyotaka@gmail.com',
   comment: ''
 }
 
@@ -50,9 +56,8 @@ export const defaultUserSpotPhotoItem: UserSpotPhotoType = {
   user: defaultUserItem,
   event: defaultEventItem,
   spot: defaultEventSpotItem,
-  stamp: '',
-  visitDate: new Date(),
-  photo: ''
+  visit_date: null,
+  photo: null
 }
 
 export const defaultUserSpotCommentItem: UserSpotCommentType = {
@@ -60,7 +65,6 @@ export const defaultUserSpotCommentItem: UserSpotCommentType = {
   user: defaultUserItem,
   event: defaultEventItem,
   spot: defaultEventSpotItem,
-  stamp: '',
-  visitDate: new Date(),
+  visit_date: null,
   comment: ''
 }

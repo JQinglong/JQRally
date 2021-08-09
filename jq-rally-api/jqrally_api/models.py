@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill
 import uuid
 
 # Create your models here.
@@ -63,9 +65,14 @@ class UserSpotPhoto(models.Model):
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
     spot = models.ForeignKey(EventSpot, on_delete=models.PROTECT)
     visit_date = models.DateField(blank=True, null=True)
-    photo = models.CharField(max_length=256, blank=True, null=True)
+    photo = models.ImageField(upload_to="photos/%y/%m/%d/", verbose_name='画像', blank=True, null=True)
+    thumbnail = ImageSpecField(source='photo',
+                            processors=[ResizeToFill(250,250)],
+                            format="JPEG",
+                            options={'quality': 60}
+                            )
     def __str__(self):
-        return f'{self.user} {self.spot}'
+        return f'{self.user} {self.spot} {self.event}'
 
 class UserSpotComment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -75,4 +82,4 @@ class UserSpotComment(models.Model):
     visit_date = models.DateField(blank=True, null=True)
     comment = models.TextField(blank=True, null=True)
     def __str__(self):
-        return f'{self.user} {self.spot}'
+        return f'{self.user} {self.spot} {self.event}'

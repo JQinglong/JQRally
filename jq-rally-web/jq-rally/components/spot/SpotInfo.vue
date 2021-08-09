@@ -1,13 +1,14 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>{{ eventState.resourceData.name }}</v-card-title>
-      <v-img height="250" :src="eventState.resourceData.spot_img" />
+      <v-card-title>{{ eventSpotState.resourceData.name }}</v-card-title>
+      <v-img height="250" :src="eventSpotState.resourceData.spot_img" />
       <v-card-subtitle>
-        {{ eventState.resourceData.description }}
+        {{ eventSpotState.resourceData.description }}
       </v-card-subtitle>
-      <v-card-text> {{ eventState.resourceData.address }} </v-card-text>
+      <v-card-text> {{ eventSpotState.resourceData.address }} </v-card-text>
       <v-card-text> 写真を投稿する </v-card-text>
+      <photo-add :event="eventSpotState.resourceData.event" :spot="eventSpotState.resourceData" />
       <v-card-text> コメントを投稿する </v-card-text>
       <v-card-actions>
         <v-btn color="primary" elevation="2" raised rounded x-large>
@@ -62,10 +63,11 @@ import {
 import { useEventSpot } from '@/compositions'
 import SpotPhotoTable from './SpotPhotoTable.vue'
 import SpotCommentTable from './SpotCommentTable.vue'
+import PhotoAdd from './PhotoAdd.vue'
 
 export default defineComponent({
   name: 'SpotInfo',
-  components: { SpotPhotoTable, SpotCommentTable },
+  components: { SpotPhotoTable, SpotCommentTable, PhotoAdd },
   props: {
     spotId: {
       type: String,
@@ -78,7 +80,7 @@ export default defineComponent({
       filter: {},
       sortDesc: false
     })
-    const { state: eventState, getData } = useEventSpot()
+    const { state: eventSpotState, getData } = useEventSpot()
 
     const fetchData = async () => {
       // console.log('props.spotId', props.spotId)
@@ -89,7 +91,7 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
-      eventState,
+      eventSpotState,
       fetchState
     }
   }
