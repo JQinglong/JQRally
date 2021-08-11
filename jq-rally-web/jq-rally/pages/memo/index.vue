@@ -7,13 +7,13 @@
 
 <script lang="ts">
 import {
-  defineComponent,
+  defineComponent
 } from '@nuxtjs/composition-api'
 import MemoAdmin from '~/components/memo/MemoAdmin.vue'
 
 export default defineComponent({
   components: { MemoAdmin },
-  setup() {
+  setup () {
     return {
     }
   }

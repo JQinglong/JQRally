@@ -24,6 +24,7 @@
 <script lang="ts">
 import { reactive, toRefs, useFetch, defineComponent } from '@nuxtjs/composition-api'
 import { useEventSpot } from '@/compositions'
+import { injectGlobalState } from '@/compositions/states/user'
 
 export default defineComponent({
   name: 'StampBook',
@@ -46,6 +47,10 @@ export default defineComponent({
     }
 
     const { fetchState } = useFetch(() => fetchData())
+
+    const gState = injectGlobalState()
+    // eslint-disable-next-line no-console
+    console.log('StampBook gState', gState.user)
 
     return {
       ...toRefs(state),

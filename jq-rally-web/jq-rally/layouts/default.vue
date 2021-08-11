@@ -46,7 +46,7 @@
         </v-icon>
       </v-btn>
       <v-toolbar-title class="mr-12 align-center">
-        <span class="title">Let's スタンプラリー</span>
+        <span class="title">Let's スタンプラリー（絶賛開発中）</span>
       </v-toolbar-title>
 
       <v-spacer />
@@ -70,17 +70,47 @@
             v-bind="attrs"
             v-on="on"
           >
-            <v-icon>mdi-account</v-icon>
+            <v-avatar
+              v-if="user.uid && user.photoURL"
+              size="36"
+            >
+              <img :src="user.photoURL" :alt="user.displayName">
+            </v-avatar>
+            <v-icon
+              v-else
+            >
+              mdi-account
+            </v-icon>
           </v-btn>
         </template>
 
         <v-list>
           <v-list-item
-            v-for="n in 5"
-            :key="n"
-            @click="() => {}"
+            v-if="user.uid"
+            :to="'/settings'"
           >
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
+            <v-list-item-avatar>
+              <v-icon>mdi-cog</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-title>設定</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            v-if="!user.uid"
+            :to="'/login'"
+          >
+            <v-list-item-avatar>
+              <v-icon>mdi-login</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            v-if="user.uid"
+            @click="logOut"
+          >
+            <v-list-item-avatar>
+              <v-icon>mdi-logout</v-icon>
+            </v-list-item-avatar>
+            <v-list-item-title>Logout</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -116,10 +146,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
-// import { provideGlobalState, injectGlobalState } from '@/compositions/states/user'
-// import { auth } from '~/plugins/firebase.config'
+import { defineComponent, ref, onMounted } from '@vue/composition-api'
+import { provideGlobalState, injectGlobalState } from '@/compositions/states/user'
+// import { auth, signOut } from '~/plugins/firebase'
 // import { SignOut } from '~/compositions/firebase/auth'
+import firebase from '~/plugins/firebase'
 
 type Item = {
   icon: string;
@@ -135,6 +166,57 @@ export default defineComponent({
     const clipped = ref(false)
     const drawer = ref(false)
     const fixed = ref(false)
+
+    provideGlobalState()
+    const gState = injectGlobalState()
+
+    // eslint-disable-next-line no-console
+    console.log('DefaultLayout gState', gState.user)
+
+    onMounted(() => {
+      // eslint-disable-next-line no-console
+      console.log('onMounted gState', gState.user)
+
+      if (gState.user.value.uid === '') {
+        firebase.auth()
+          .getRedirectResult()
+          .then((result: any) => {
+            if (result.credential) {
+              /** @type {firebase.auth.OAuthCredential} */
+              // const credential = result.credential
+
+              // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+              // const token = credential.accessToken
+              // ...
+            }
+            // The signed-in user info.
+            const user = result.user
+            // eslint-disable-next-line no-console
+            console.log('getRedirectResult user', user)
+            if (user) {
+              gState.setUserState({
+                uid: user ? user.uid : '',
+                email: user && user.email ? user.email : '',
+                displayName: user && user.displayName ? user.displayName : '',
+                photoURL: user && user.photoURL ? user.photoURL : ''
+              })
+            } else {
+              // eslint-disable-next-line no-console
+              console.log('getRedirectResult out')
+            }
+          }).catch((error: any) => {
+            // // Handle Errors here.
+            // var errorCode = error.code;
+            // var errorMessage = error.message;
+            // // The email of the user's account used.
+            // var email = error.email;
+            // // The firebase.auth.AuthCredential type that was used.
+            // var credential = error.credential;
+            // eslint-disable-next-line no-console
+            console.log('getRedirectResult error', error)
+          })
+      }
+    })
 
     const items = ref<Item[]>([
       {
@@ -184,34 +266,18 @@ export default defineComponent({
       }
     ])
 
-    // provideGlobalState()
-    // const stateGlobal = injectGlobalState()
-
-    // onMounted(() => {
-    //   const publicPath = ["/signin","/signup"]
-    //   if (stateGlobal.user.value.id === '') {
-    //     auth.onAuthStateChanged((user) => {
-
-    //       if (user) {
-    //         stateGlobal.setUserState({
-    //           id: user ? user.uid : '',
-    //           email: user && user.email ? user.email : '',
-    //           name: user && user.displayName ? user.displayName : '',
-    //           thumbnail: user && user.photoURL ? user.photoURL : '',
-    //         })
-    //       } else {
-    //         if (root.$route.path.indexOf('/admin') === 0) {
-    //           root.$router.push('/login')
-    //         }
-    //       }
-    //     })
-    //   }
-    // })
-
-    // const signOut = () => {
-    //   SignOut()
-
-    // }
+    const logOut = () => {
+      firebase.auth().signOut().then(() => {
+        // Sign-out successful.
+      }).catch((error: any) => {
+        // An error happened.
+        // eslint-disable-next-line no-console
+        console.log('signOut error', error)
+      })
+      // eslint-disable-next-line no-console
+      console.log('logOut', gState.user)
+      gState.user.value.uid = ''
+    }
 
     return {
       clipped,
@@ -219,7 +285,9 @@ export default defineComponent({
       fixed,
       items,
       tabitems,
-      adminitems
+      adminitems,
+      user: gState.user,
+      logOut
       // stateGlobal,
       // signOut,
     }
