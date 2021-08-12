@@ -14,7 +14,9 @@ const config = {
 }
 
 // eslint-disable-next-line no-console
-console.log(config)
+console.log('process.env.BASE_URL', process.env.BASE_URL)
+// eslint-disable-next-line no-console
+console.log('process.env.FIREBASE_PROJECT_ID', process.env.FIREBASE_PROJECT_ID)
 
 const firebase = Firebase.apps.length ? Firebase.app() : Firebase.initializeApp(config)
 export const auth = firebase.auth()
