@@ -13,6 +13,9 @@ const config = {
   // measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 }
 
+// eslint-disable-next-line no-console
+console.log(config)
+
 const firebase = Firebase.apps.length ? Firebase.app() : Firebase.initializeApp(config)
 export const auth = firebase.auth()
 
