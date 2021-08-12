@@ -1,12 +1,11 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>ログイン</v-card-title>
       <v-card-text>
         <v-btn
           color="blue-grey"
           class="ma-2 white--text"
-          @click="google"
+          @click="login(0)"
         >
           Sign in with Google
           <v-icon
@@ -21,7 +20,7 @@
         <v-btn
           color="blue-grey"
           class="ma-2 white--text"
-          @click="facebook"
+          @click="login(1)"
         >
           Sign in with Facebook
           <v-icon
@@ -42,32 +41,48 @@ import {
 } from '@nuxtjs/composition-api'
 
 import { injectGlobalState } from '@/compositions/states/user'
-import firebase, { googleProvider } from '~/plugins/firebase'
+import { googleProvider, facebookProvider } from '~/plugins/firebase.config'
+import { SigninWithOAuth } from '~/compositions/firebase/auth'
 
 export default defineComponent({
   name: 'SinginButtons',
   props: {
   },
   setup (_, { root }) {
-    const gState = injectGlobalState()
+    const userState = injectGlobalState()
 
-    if (gState.user.value.uid) {
-      // eslint-disable-next-line vue/no-mutating-props
-      root.$router.push('/')
-    }
+    const provider = [googleProvider, facebookProvider]
 
-    const google = () => {
-      firebase.auth().signInWithRedirect(googleProvider)
-      root.$router.push('/')
-    }
-    const facebook = () => {
-      firebase.auth().signInWithRedirect(googleProvider)
-      root.$router.push('/')
+    // if (userState.user.value.uid) {
+    //   // eslint-disable-next-line vue/no-mutating-props
+    //   root.$router.push('/')
+    // }
+
+    const login = async (value: number) => {
+      try {
+        const currentUser = await SigninWithOAuth(provider[value])
+        if (currentUser.status === 'ok') {
+          const userInfo = currentUser.data.user
+          // eslint-disable-next-line no-console
+          console.log('loginAuth', userState)
+
+          userState.setUserState({
+            uid: userInfo ? userInfo.uid : '',
+            email: userInfo && userInfo.email ? userInfo.email : '',
+            displayName: userInfo && userInfo.displayName ? userInfo.displayName : '',
+            photoURL: userInfo && userInfo.photoURL ? userInfo.photoURL : ''
+          })
+        } else {
+          alert('Authログイン失敗')
+        }
+        root.$router.push('/')
+      } catch (e) {
+        alert(e)
+      }
     }
 
     return {
-      google,
-      facebook
+      login
     }
   }
 })

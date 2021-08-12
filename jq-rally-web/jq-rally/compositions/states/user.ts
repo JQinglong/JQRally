@@ -1,19 +1,19 @@
 import { provide, inject, InjectionKey, reactive, toRefs } from '@vue/composition-api'
 
 export type UserType = {
-  uid?:string,
-  displayName:string,
-  email:string,
-  photoURL:string,
+    uid?:string,
+    displayName:string,
+    email:string,
+    photoURL:string,
 }
 
 export type ErrorType = {
-  state:number
-  message:string
+    state:number
+    message:string
 }
 export type GlobalStateType = {
-  user:UserType,
-  error?:ErrorType
+    user:UserType,
+    error?:ErrorType
 }
 
 export const useGlobalState = () => {
@@ -25,14 +25,12 @@ export const useGlobalState = () => {
       photoURL: ''
     }
   })
-
   const setUserState = (state: UserType) => {
     globalState.user.uid = state.uid
     globalState.user.email = state.email
     globalState.user.photoURL = state.photoURL
     globalState.user.displayName = state.displayName
   }
-
   const cleanUserState = () => {
     globalState.user = {
       uid: '',

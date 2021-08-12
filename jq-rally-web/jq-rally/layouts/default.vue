@@ -71,10 +71,10 @@
             v-on="on"
           >
             <v-avatar
-              v-if="user.uid && user.photoURL"
+              v-if="stateGlobal.user && stateGlobal.user.value.photoURL"
               size="36"
             >
-              <img :src="user.photoURL" :alt="user.displayName">
+              <img :src="stateGlobal.user.value.photoURL" :alt="stateGlobal.user.value.photoURL">
             </v-avatar>
             <v-icon
               v-else
@@ -83,10 +83,9 @@
             </v-icon>
           </v-btn>
         </template>
-
         <v-list>
           <v-list-item
-            v-if="user.uid"
+            v-if="stateGlobal.user.value.uid"
             :to="'/settings'"
           >
             <v-list-item-avatar>
@@ -95,7 +94,7 @@
             <v-list-item-title>設定</v-list-item-title>
           </v-list-item>
           <v-list-item
-            v-if="!user.uid"
+            v-if="!stateGlobal.user.value.uid"
             :to="'/login'"
           >
             <v-list-item-avatar>
@@ -104,8 +103,8 @@
             <v-list-item-title>Login</v-list-item-title>
           </v-list-item>
           <v-list-item
-            v-if="user.uid"
-            @click="logOut"
+            v-if="stateGlobal.user.value.uid"
+            @click="signOut"
           >
             <v-list-item-avatar>
               <v-icon>mdi-logout</v-icon>
@@ -139,8 +138,12 @@
       </v-container>
     </v-main>
 
-    <v-footer :absolute="!fixed" app>
+    <v-footer
+      :absolute="!fixed"
+      app
+    >
       <span>&copy; {{ new Date().getFullYear() }} JQ</span>
+      {{ stateGlobal.user }}
     </v-footer>
   </v-app>
 </template>
@@ -148,75 +151,22 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from '@vue/composition-api'
 import { provideGlobalState, injectGlobalState } from '@/compositions/states/user'
-// import { auth, signOut } from '~/plugins/firebase'
-// import { SignOut } from '~/compositions/firebase/auth'
-import firebase from '~/plugins/firebase'
+import { auth } from '~/plugins/firebase.config'
+import { SignOut } from '~/compositions/firebase/auth'
 
 type Item = {
-  icon: string;
-  title: string;
-  to: string;
-};
+  icon: string
+  title: string
+  to: string
+}
 
 export default defineComponent({
   name: 'DefaultLayout',
 
-  // eslint-disable-next-line no-empty-pattern
-  setup () {
+  setup (_, { root }) {
     const clipped = ref(false)
     const drawer = ref(false)
     const fixed = ref(false)
-
-    provideGlobalState()
-    const gState = injectGlobalState()
-
-    // eslint-disable-next-line no-console
-    console.log('DefaultLayout gState', gState.user)
-
-    onMounted(() => {
-      // eslint-disable-next-line no-console
-      console.log('onMounted gState', gState.user)
-
-      if (gState.user.value.uid === '') {
-        firebase.auth()
-          .getRedirectResult()
-          .then((result: any) => {
-            if (result.credential) {
-              /** @type {firebase.auth.OAuthCredential} */
-              // const credential = result.credential
-
-              // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-              // const token = credential.accessToken
-              // ...
-            }
-            // The signed-in user info.
-            const user = result.user
-            // eslint-disable-next-line no-console
-            console.log('getRedirectResult user', user)
-            if (user) {
-              gState.setUserState({
-                uid: user ? user.uid : '',
-                email: user && user.email ? user.email : '',
-                displayName: user && user.displayName ? user.displayName : '',
-                photoURL: user && user.photoURL ? user.photoURL : ''
-              })
-            } else {
-              // eslint-disable-next-line no-console
-              console.log('getRedirectResult out')
-            }
-          }).catch((error: any) => {
-            // // Handle Errors here.
-            // var errorCode = error.code;
-            // var errorMessage = error.message;
-            // // The email of the user's account used.
-            // var email = error.email;
-            // // The firebase.auth.AuthCredential type that was used.
-            // var credential = error.credential;
-            // eslint-disable-next-line no-console
-            console.log('getRedirectResult error', error)
-          })
-      }
-    })
 
     const items = ref<Item[]>([
       {
@@ -265,18 +215,32 @@ export default defineComponent({
         to: '/menu1'
       }
     ])
+    provideGlobalState()
+    const stateGlobal = injectGlobalState()
 
-    const logOut = () => {
-      firebase.auth().signOut().then(() => {
-        // Sign-out successful.
-      }).catch((error: any) => {
-        // An error happened.
-        // eslint-disable-next-line no-console
-        console.log('signOut error', error)
-      })
-      // eslint-disable-next-line no-console
-      console.log('logOut', gState.user)
-      gState.user.value.uid = ''
+    onMounted(() => {
+      // const publicPath = ["/signin","/signup"]
+      if (stateGlobal.user.value.uid === '') {
+        auth.onAuthStateChanged((user: any) => {
+          if (user) {
+            stateGlobal.setUserState({
+              uid: user ? user.uid : '',
+              email: user && user.email ? user.email : '',
+              displayName: user && user.displayName ? user.displayName : '',
+              photoURL: user && user.photoURL ? user.photoURL : ''
+            })
+          } else {
+            if (root.$route.path.indexOf('/admin') === 0) {
+              root.$router.push('/login')
+            }
+            ;
+          }
+        })
+      }
+    })
+
+    const signOut = () => {
+      SignOut()
     }
 
     return {
@@ -286,10 +250,8 @@ export default defineComponent({
       items,
       tabitems,
       adminitems,
-      user: gState.user,
-      logOut
-      // stateGlobal,
-      // signOut,
+      stateGlobal,
+      signOut
     }
   }
 })
